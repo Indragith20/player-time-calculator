@@ -1,0 +1,48 @@
+<ng-container style="margin-top: 30px;">
+  <h3 style="text-align: center">Team Generator</h3>
+  <form [formGroup]="teamDetailsForm">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 text-center">
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="Select the Number of Players" formControlName="totalPlayers">
+            <mat-option *ngFor="let player of numberOfPlayers" [value]="player">
+              {{player}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <button mat-button (click)="onClick()">Enter</button>
+      </div>
+    </div>
+    <ng-container formArrayName="playerDetails">
+      <div *ngFor="let player of playerDetailsFormData; let i=index">
+        <div [formGroup]="player">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Player Name" formControlName="playerName" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Jersey Number" formControlName="jerseyNumber" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+          <button mat-button (click)="proceed()">Proceed to Create</button>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    
+  </form>
+</ng-container>

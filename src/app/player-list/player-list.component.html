@@ -1,0 +1,15 @@
+<div class="container">
+  <form [formGroup]="playerListForm">
+    <div class="row">
+      <div class="col-md-4 container-style" *ngFor="let player of PlayerListFormArray" (click)="onClickPlayer(player)">
+        <ng-container [formGroup]="player">
+          <span>{{player.get('playerName').value}}</span>
+          <span class="jersey-style">{{player.get('jerseyNumber').value}}</span>
+          <span class="timer-style">
+            {{player.get('minutes').value >= 10 ? player.get('minutes').value : '0' + player.get('minutes').value}} : {{player.get('seconds').value >= 10 ? player.get('seconds').value : '0' + player.get('seconds').value}}
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</div>
