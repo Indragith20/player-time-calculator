@@ -1,7 +1,8 @@
 <div class="container">
   <form [formGroup]="playerListForm">
     <div class="row">
-      <div class="col-md-4 container-style" *ngFor="let player of PlayerListFormArray" (click)="onClickPlayer(player)">
+      <div class="col-md-4 container-style" *ngFor="let player of PlayerListFormArray" 
+        (click)="onClickPlayer(player)" [ngClass]="{'container-active-style': player.get('timer').value === true }">
         <ng-container [formGroup]="player">
           <span>{{player.get('playerName').value}}</span>
           <span class="jersey-style">{{player.get('jerseyNumber').value}}</span>
@@ -11,7 +12,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
       <div class="col-md-4"></div>
       <div class="col-md-4">
         <button mat-button (click)="downloadExcel()">Download Excel</button>
