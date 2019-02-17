@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { IPlayer } from '../interfaces/player.interface';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ExcelService } from '../services/excel.service';
 
 @Component({
   selector: 'app-player-list',
   templateUrl: './player-list.component.html',
-  styleUrls: ['./player-list.component.scss']
+  styleUrls: ['./player-list.component.scss'],
+  providers: [ExcelService]
 })
 export class PlayerListComponent implements OnInit {
   playerList: IPlayer[];
@@ -17,7 +19,7 @@ export class PlayerListComponent implements OnInit {
     return (this.playerListForm.get('playerList') as FormArray).controls;
   }
 
-  constructor(private appService: AppService, private fb: FormBuilder) { }
+  constructor(private appService: AppService, private fb: FormBuilder, private excelService: ExcelService) { }
 
   ngOnInit() {
     this.playerList = this.appService.getPlayerDetails();
@@ -60,8 +62,6 @@ export class PlayerListComponent implements OnInit {
     if(this.timerInterval) {
       clearInterval(this.timerInterval);
     }
-    console.log('Modified');
-    console.log(player.get('timer').value);
     let seconds = player.get('seconds').value;
     let minutes = player.get('minutes').value;
     const startTimerAction = player.get('timer').value ===  true ? true : false;
@@ -81,6 +81,20 @@ export class PlayerListComponent implements OnInit {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+  }
+
+  downloadExcel() {
+    const playerData = this.playerListForm.get('playerList').value;
+    const data = playerData.map((player) => {
+      return {
+        PlayerId: player.id,
+        PlayerName: player.playerName,
+        JerseyNumber: player.jerseyNumber,
+        Minutes: player.minutes,
+        Seconds: player.seconds
+      };
+    });
+    this.excelService.exportAsExcelFile(data, 'PlayerInTime');
   }
 
 }

@@ -5,3 +5,11 @@ export interface IPlayer {
     seconds: number;
     timer: boolean;
 }
+
+export interface IExcelData {
+    PlayerId: string;
+    PlayerName: string;
+    JerseyNumber: string;
+    Minutes: number;
+    Seconds: number;
+}
